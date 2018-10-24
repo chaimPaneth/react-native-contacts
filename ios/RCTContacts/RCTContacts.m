@@ -65,13 +65,14 @@ RCT_EXPORT_METHOD(getContactsMatchingString:(NSString *)string callback:(RCTResp
                       CNContactImageDataAvailableKey,
                       CNContactNoteKey,
                       CNContactUrlAddressesKey,
-                      CNContactBirthdayKey
+                      CNContactBirthdayKey,
+                      CNContactThumbnailImageDataKey
                       ];
     NSArray *arrayOfContacts = [store unifiedContactsMatchingPredicate:[CNContact predicateForContactsMatchingName:searchString]
                                                            keysToFetch:keys
                                                                  error:&contactError];
     [arrayOfContacts enumerateObjectsUsingBlock:^(CNContact * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        NSDictionary *contactDictionary = [self contactToDictionary:obj withThumbnails:NO];
+        NSDictionary *contactDictionary = [self contactToDictionary:obj withThumbnails:YES];
         [contacts addObject:contactDictionary];
     }];
     callback(@[[NSNull null], contacts]);
